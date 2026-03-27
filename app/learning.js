@@ -424,9 +424,19 @@ const refs = {
 
 let state = loadState();
 state = normalizeState(state);
+if (shouldForceOverviewOnEntry()) {
+  state.phase = 'overview';
+  state.overviewIndex = 0;
+  saveState();
+}
 
 wireEvents();
 render();
+
+function shouldForceOverviewOnEntry() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('start') === 'overview';
+}
 
 function wireEvents() {
   refs.topicTabs.addEventListener('click', (event) => {
