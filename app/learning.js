@@ -1,7 +1,7 @@
-const STEP_TOTAL = 7;
-const STEP_OVERVIEW = 0;
-const STEP_WALLET = 1;
-const STEP_SENSOR = 2;
+const SECTION_TOTAL = 3;
+const SECTION_FOUNDATIONS = 1;
+const SECTION_WALLET = 2;
+const SECTION_SENSOR = 3;
 const STORAGE_KEY = 'edgechain-learning-flow-v3';
 const KUTSAGA_CITATION =
   'Source: Kutsaga (Tobacco Research Board), Field Services Division - curing, irrigation, and soil pH guidance for tobacco.';
@@ -293,7 +293,7 @@ const SENSOR_TOPICS = [
     label: '2.1 Tobacco Data',
     kicker: 'Topic 1',
     title: 'Tobacco Data That Matters',
-    summary: 'Step 2 inoenderana necore business yefarmer: quality tobacco yield.',
+    summary: 'Section 3 inoenderana necore business yefarmer: quality tobacco yield.',
     points: [
       'Soil moisture ndiyo number 1 pa leaf size, weight, uye quality.',
       'Air temperature + humidity zvinobatsira kuona stress ne disease windows.',
@@ -383,13 +383,13 @@ const SENSOR_TOPICS = [
     label: '2.5 Challenge',
     kicker: 'Topic 5',
     title: 'Wrap-Up Challenge + Badge',
-    summary: 'Short challenge yekusimbisa learning before Step 3.',
+    summary: 'Short challenge yekusimbisa learning before next section.',
     points: [
       'Q1: Which data point ndiyo number 1 pa tobacco growth? (soil moisture)',
       'Q2: During midrib drying, temp should move higher than lamina stage.',
       'Q3: Which trusted source supports these tobacco stage decisions? (TRB)',
     ],
-    takeaway: 'Zvino ndoitei? Complete challenge uwane badge reStep 2.',
+    takeaway: 'Zvino ndoitei? Complete challenge uwane badge reSection 3.',
     visual: {
       type: 'challenge',
     },
@@ -567,34 +567,30 @@ function wireEvents() {
 }
 
 function render() {
-  const stepNumber = getStepNumber();
+  const sectionNumber = getSectionNumber();
   const topics = getCurrentTopics();
   const index = getCurrentIndex();
   const topic = topics[index];
 
-  refs.lessonIndex.textContent = `Step ${stepNumber} / ${STEP_TOTAL}`;
+  refs.lessonIndex.textContent = `Section ${sectionNumber} / ${SECTION_TOTAL}`;
   refs.subtopicIndex.textContent = `Topic ${index + 1} / ${topics.length}`;
 
-  const progressPercent = Math.round((Math.max(0.5, stepNumber) / STEP_TOTAL) * 100);
+  const progressPercent = Math.round((sectionNumber / SECTION_TOTAL) * 100);
   refs.progressFill.style.width = `${progressPercent}%`;
 
+  refs.stageKicker.textContent = '';
+  refs.stageKicker.classList.add('hidden');
+  refs.stageSub.textContent = '';
+  refs.stageSub.classList.add('hidden');
+
   if (state.phase === 'overview') {
-    refs.stageKicker.textContent = 'STEP 0 OVERVIEW';
-    refs.stageTitle.textContent = 'EdgeChain Foundations';
-    refs.stageSub.textContent = '';
-    refs.stageSub.classList.add('hidden');
+    refs.stageTitle.textContent = 'Section 1 - EdgeChain Foundations';
     refs.stageCitation.classList.add('hidden');
   } else if (state.phase === 'wallet') {
-    refs.stageKicker.textContent = 'STEP 1';
-    refs.stageTitle.textContent = 'Connect Wallet';
-    refs.stageSub.textContent = 'Pano tiri kungodzidza wallet basics chete.';
-    refs.stageSub.classList.remove('hidden');
+    refs.stageTitle.textContent = 'Section 2 - Wallet Principles';
     refs.stageCitation.classList.add('hidden');
   } else {
-    refs.stageKicker.textContent = 'STEP 2';
-    refs.stageTitle.textContent = 'Capture Sensor Readings';
-    refs.stageSub.textContent = 'Tobacco-focused simulation for Odzi farmers.';
-    refs.stageSub.classList.remove('hidden');
+    refs.stageTitle.textContent = 'Section 3 - Capture Sensor Readings';
     refs.stageCitation.textContent = KUTSAGA_CITATION;
     refs.stageCitation.classList.remove('hidden');
   }
@@ -608,6 +604,7 @@ function render() {
       return `<button class="tab-btn${active}${dangerClass}" type="button" data-index="${tabIndex}">${dangerIcon}<span>${escapeHtml(tab.label)}</span></button>`;
     })
     .join('');
+  refs.topicTabs.classList.toggle('foundation-tabs', state.phase === 'overview');
 
   refs.tabKicker.textContent = topic.kicker;
   refs.tabTitle.innerHTML = formatTopicTitle(topic.title);
@@ -645,22 +642,22 @@ function render() {
     refs.btnPrevTab.disabled = index === 0;
     refs.btnPrevTab.textContent = 'Previous Topic';
     refs.btnNextTab.disabled = false;
-    refs.btnNextTab.textContent = index === topics.length - 1 ? 'Start Step 1' : 'Next Topic';
+    refs.btnNextTab.textContent = index === topics.length - 1 ? 'Go to Section 2' : 'Next Topic';
     return;
   }
 
   if (state.phase === 'wallet') {
     refs.btnPrevTab.disabled = false;
-    refs.btnPrevTab.textContent = index === 0 ? 'Back to Overview' : 'Previous Topic';
+    refs.btnPrevTab.textContent = index === 0 ? 'Back to Section 1' : 'Previous Topic';
     refs.btnNextTab.disabled = false;
-    refs.btnNextTab.textContent = index === topics.length - 1 ? 'Start Step 2' : 'Next Topic';
+    refs.btnNextTab.textContent = index === topics.length - 1 ? 'Go to Section 3' : 'Next Topic';
     return;
   }
 
   refs.btnPrevTab.disabled = false;
-  refs.btnPrevTab.textContent = index === 0 ? 'Back to Step 1' : 'Previous Topic';
+  refs.btnPrevTab.textContent = index === 0 ? 'Back to Section 2' : 'Previous Topic';
   refs.btnNextTab.disabled = index === topics.length - 1;
-  refs.btnNextTab.textContent = index === topics.length - 1 ? 'Step 3 Coming Soon' : 'Next Topic';
+  refs.btnNextTab.textContent = index === topics.length - 1 ? 'Section 4 Coming Soon' : 'Next Topic';
 }
 
 function renderBiteNotes(points) {
@@ -841,7 +838,7 @@ function renderDecisionBoard() {
 
 function renderChallenge() {
   const statusText = state.sim.badgeEarned ? 'Badge Earned: Sensor Starter' : 'Badge pending';
-  const buttonLabel = state.sim.badgeEarned ? 'Badge Earned' : 'Earn Step 2 Badge';
+  const buttonLabel = state.sim.badgeEarned ? 'Badge Earned' : 'Earn Section 3 Badge';
 
   return `<div class="badge-box">
       <p class="curing-stage">${escapeHtml(statusText)}</p>
@@ -914,7 +911,7 @@ function handleSimAction(action) {
 
   if (action === 'claim_badge') {
     state.sim.badgeEarned = true;
-    showCallout('Wakunda Step 2 badge: Sensor Starter. Wagona kushandisa data kuita decision.');
+    showCallout('Wakunda Section 3 badge: Sensor Starter. Wagona kushandisa data kuita decision.');
   }
 }
 
@@ -1222,16 +1219,16 @@ function setCurrentIndex(index) {
   hideCallout();
 }
 
-function getStepNumber() {
+function getSectionNumber() {
   if (state.phase === 'overview') {
-    return STEP_OVERVIEW;
+    return SECTION_FOUNDATIONS;
   }
 
   if (state.phase === 'wallet') {
-    return STEP_WALLET;
+    return SECTION_WALLET;
   }
 
-  return STEP_SENSOR;
+  return SECTION_SENSOR;
 }
 
 function saveState() {
