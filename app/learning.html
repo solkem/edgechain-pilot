@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EdgeChain Learning - Farmer Journey</title>
+    <link rel="stylesheet" href="./learning.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="back-link" href="./index.html">Back to Pilot</a>
+      <div class="top-right">
+        <span id="lesson-index" class="pill">Step 0 / 7</span>
+        <span id="subtopic-index" class="pill good">Topic 1 / 3</span>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="card hero">
+        <p class="kicker">EDGECHAIN LEARNING</p>
+        <h1>Farmer Journey</h1>
+        <p class="sub">Tinotanga ne overview, topinda Step 1 wallet, tobva taenda ku Step 2 tobacco sensor simulation.</p>
+      </section>
+
+      <section class="card lesson-card">
+        <div class="progress-wrap" aria-label="Lesson progress">
+          <div class="progress-track"><span id="progress-fill" class="progress-fill"></span></div>
+        </div>
+
+        <p id="stage-kicker" class="stage-kicker"></p>
+        <h2 id="stage-title" class="stage-title"></h2>
+        <p id="stage-sub" class="stage-sub"></p>
+        <p id="stage-citation" class="stage-citation hidden"></p>
+
+        <nav id="topic-tabs" class="wallet-tabs" aria-label="Learning topic tabs"></nav>
+
+        <article class="content-card">
+          <div>
+            <p id="tab-kicker" class="content-kicker"></p>
+            <h3 id="tab-title" class="content-title"></h3>
+            <p id="tab-summary" class="content-summary"></p>
+          </div>
+
+          <article id="tab-visual" class="visual-box"></article>
+          <p id="click-callout" class="click-callout hidden" aria-live="polite"></p>
+          <div id="tab-notes" class="tab-notes hidden"></div>
+
+          <ul id="tab-points" class="point-list"></ul>
+
+          <p id="tab-takeaway" class="term-chip"></p>
+        </article>
+
+        <div class="actions">
+          <button id="btn-prev-tab" class="btn btn-secondary" type="button">Previous Topic</button>
+          <button id="btn-next-tab" class="btn btn-primary" type="button">Next Topic</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./learning.js"></script>
+  </body>
+</html>
