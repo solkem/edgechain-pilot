@@ -571,18 +571,20 @@ function render() {
   if (state.phase === 'overview') {
     refs.stageKicker.textContent = 'STEP 0 OVERVIEW';
     refs.stageTitle.textContent = 'EdgeChain Foundations';
-    refs.stageSub.innerHTML =
-      'Flow: <span class="flow-term edgechain">EdgeChain</span> -> <span class="flow-term edge">Edge</span><span class="flow-term ai">AI</span> -> <span class="flow-term block">Block</span><span class="flow-term chain">Chain</span>';
+    refs.stageSub.textContent = '';
+    refs.stageSub.classList.add('hidden');
     refs.stageCitation.classList.add('hidden');
   } else if (state.phase === 'wallet') {
     refs.stageKicker.textContent = 'STEP 1';
     refs.stageTitle.textContent = 'Connect Wallet';
     refs.stageSub.textContent = 'Pano tiri kungodzidza wallet basics chete.';
+    refs.stageSub.classList.remove('hidden');
     refs.stageCitation.classList.add('hidden');
   } else {
     refs.stageKicker.textContent = 'STEP 2';
     refs.stageTitle.textContent = 'Capture Sensor Readings';
     refs.stageSub.textContent = 'Tobacco-focused simulation for Odzi farmers.';
+    refs.stageSub.classList.remove('hidden');
     refs.stageCitation.textContent = KUTSAGA_CITATION;
     refs.stageCitation.classList.remove('hidden');
   }
