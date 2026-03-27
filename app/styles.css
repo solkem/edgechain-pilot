@@ -247,6 +247,13 @@ input {
   transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
 }
 
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .btn-primary {
   background: linear-gradient(135deg, #2465ff 0%, #1551de 100%);
   color: #ffffff;
